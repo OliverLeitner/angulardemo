@@ -1,0 +1,10 @@
+{
+  "/random": {
+    "target": "https://animechan.vercel.app/api/random",
+    "secure": true,
+    "pathRewrite": {
+    "^/random": ""
+  },
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,18 @@
+<div class="card">
+    <p-table [value]="dataArray" [paginator]="true" [rows]="3" [totalRecords]="dataArray.length">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Anime</th>
+                <th>Character</th>
+                <th>Quote</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ani>
+            <tr>
+                <td>{{ani.anime}}</td>
+                <td>{{ani.character}}</td>
+                <td>{{ani.quote}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
