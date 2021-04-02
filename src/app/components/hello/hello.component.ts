@@ -14,7 +14,7 @@ import {HelloTableComponent} from '../hello-table/hello-table.component';
 export class HelloComponent implements OnInit, OnDestroy {
   aniquote: AnimeObject = new AnimeObject()
   subscription: Subscription = new Subscription()
-
+  stopped: boolean = false
 
   constructor(public anisvc: AniquotesService) {
   }
@@ -34,15 +34,35 @@ export class HelloComponent implements OnInit, OnDestroy {
       console.log("quote inserted into array");
   }
 
+  // start button
+  startParsing(): void {
+      if (this.subscription) this.subscription.unsubscribe()
+      this.clickMe()
+      setTimeout (() => {
+         this.startParsing()
+      }, 3000);
+  }
+
+  // stop button
+  stopParsing(): void {
+      if (this.subscription) this.subscription.unsubscribe()
+      this.stopped = true
+  }
+
+  // fetch data
   clickMe(): void {
-      let sobject = this.anisvc.getQuote;
-      this.subscription = sobject.subscribe((data: AnimeObject) => {
-          this.aniquote = {
-            anime: data.anime,
-            character:  data.character,
-            quote: data.quote
-          }
-          this.pushQuotesIntoArray(this.aniquote)
-      });
+      if (!this.stopped) {
+          let sobject = this.anisvc.getQuote; // new observable
+          this.subscription = sobject.subscribe(
+              (data: AnimeObject) => {
+                  this.aniquote = {
+                      anime: data.anime,
+                      character:  data.character,
+                      quote: data.quote
+                  }
+                  this.pushQuotesIntoArray(this.aniquote)
+              }
+          );
+      }
   }
 }

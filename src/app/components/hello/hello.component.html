@@ -4,5 +4,7 @@
     <li><span>Anime Character: </span>{{aniquote.character}}</li>
     <li><span>Anime Quote: </span>{{aniquote.quote}}</li>
 </ul>
-<p-button label="Click" (click)="clickMe()"></p-button>
-<hello-table *ngIf="anisvc.animeDataArray.length > 0" [dataArray]="anisvc.animeDataArray"></hello-table>
+<p-button label="Start" (click)="startParsing()"></p-button>
+<p-button label="Stop" (click)="stopParsing()"></p-button>
+<!--p-button label="Click" (click)="clickMe()"></p-button-->
+<hello-table [hidden]="anisvc.animeDataArray.length === 0" [dataArray]="anisvc.animeDataArray"></hello-table>
