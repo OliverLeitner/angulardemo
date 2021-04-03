@@ -1,8 +1,11 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Observable, Subscription, of } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 
 import {AniquotesService} from '../../services/aniquotes.service';
 import {AnimeObject} from '../../shared/AnimeObject';
+import {ErrorObject} from '../../shared/ErrorObject';
 
 @Component({
   selector: 'app-hello',
@@ -13,6 +16,7 @@ export class HelloComponent implements OnDestroy {
   aniquote: AnimeObject = new AnimeObject()
   subscription: Subscription = new Subscription()
   stopped: boolean = true
+  errorObject: ErrorObject = new ErrorObject()
 
   constructor(public anisvc: AniquotesService) {
   }
@@ -33,7 +37,7 @@ export class HelloComponent implements OnDestroy {
 
   // start button
   startParsing(): void {
-      this.subscription?.unsubscribe()
+      //this.subscription?.unsubscribe()
       this.addQuote()
       setTimeout (() => {
           if (!this.stopped) this.startParsing()
@@ -42,17 +46,23 @@ export class HelloComponent implements OnDestroy {
 
   // stop button
   stopParsing(): void {
-      this.stopped = !!this.subscription
-      this.subscription?.unsubscribe()
+      this.stopped = !!this.subscription // set state to stopped
+      this.subscription?.unsubscribe() // close observable subscription
+      this.errorObject = new ErrorObject() // cleanup error message
   }
 
   // fetch data
   addQuote(): void {
-      let sobject = this.anisvc.getQuote;
-      this.subscription = sobject?.subscribe(
-          (data: AnimeObject) => {
-              this.pushQuotesIntoArray(this.aniquote = data)
-          }
-      );
+      let sobject: Observable<HttpResponse<AnimeObject>> = this.anisvc.getQuote // just an observable object
+      this.subscription = sobject?.subscribe( // observe
+          // retrieve data
+          (resp: HttpResponse<AnimeObject>) => {
+              this.pushQuotesIntoArray(this.aniquote = resp.body as AnimeObject/*{ ... resp.body as AnimeObject }*/)
+          },
+          // if something goes south
+          (error: ErrorObject) => { this.errorObject = error },
+          // on data received completed...
+          () => { console.log("received data") }
+      )
   }
 }

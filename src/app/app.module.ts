@@ -14,6 +14,9 @@ import { HelloComponent } from './components/hello/hello.component';
 import { BadrouteComponent } from './components/badroute/badroute.component';
 import { HelloTableComponent } from './components/hello-table/hello-table.component';
 
+// tse home
+import { HomeComponent } from './components/home/home.component';
+
 import {AniquotesService} from './services/aniquotes.service';
 
 @NgModule({
@@ -21,7 +24,8 @@ import {AniquotesService} from './services/aniquotes.service';
     AppComponent,
     HelloComponent,
     BadrouteComponent,
-    HelloTableComponent
+    HelloTableComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

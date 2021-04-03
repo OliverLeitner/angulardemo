@@ -6,5 +6,6 @@
 </ul>
 <p-button label="Start" (click)="stopped=false; startParsing()"></p-button>
 <p-button label="Stop" (click)="stopParsing()"></p-button>
-<div [hidden]="stopped"><p style="color: red">task running...</p></div>
+<div *ngIf="!stopped"><p style="color: red">task running...</p></div>
+<div *ngIf="errorObject.message">{{errorObject.message}}</div>
 <hello-table [hidden]="anisvc.animeDataArray.length === 0" [dataArray]="anisvc.animeDataArray"></hello-table>

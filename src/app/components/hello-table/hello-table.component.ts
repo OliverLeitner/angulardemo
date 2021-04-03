@@ -9,7 +9,7 @@ import {AnimeObject} from '../../shared/AnimeObject';
 })
 export class HelloTableComponent {
 
-    @Input() dataArray!: AnimeObject[];
+    @Input() dataArray: AnimeObject[] = [];
 
     constructor() {
     }

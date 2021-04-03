@@ -26,10 +26,11 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('angulardemo');
   });
 
-  it('should render title', () => {
+  // killed that, so its no longer there...
+  /*it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain('angulardemo app is running!');
-  });
+  });*/
 });
