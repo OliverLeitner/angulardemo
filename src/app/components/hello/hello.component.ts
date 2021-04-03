@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
 import {AniquotesService} from '../../services/aniquotes.service';
@@ -9,7 +9,7 @@ import {AnimeObject} from '../../shared/AnimeObject';
   templateUrl: './hello.component.html',
   styleUrls: ['./hello.component.less']
 })
-export class HelloComponent implements OnInit, OnDestroy {
+export class HelloComponent implements OnDestroy {
   aniquote: AnimeObject = new AnimeObject()
   subscription: Subscription = new Subscription()
   stopped: boolean = true
@@ -17,13 +17,9 @@ export class HelloComponent implements OnInit, OnDestroy {
   constructor(public anisvc: AniquotesService) {
   }
 
-  ngOnInit(): void {
-      console.log("component has initialized")
-  }
-
   ngOnDestroy(): void {
       this.subscription.unsubscribe()
-      console.log("after anime loading")
+      console.log("after leaving the app, we cleanup")
   }
 
   // keep em quotes for listing
@@ -39,7 +35,7 @@ export class HelloComponent implements OnInit, OnDestroy {
   startParsing(): void {
       if (this.subscription)
         this.subscription.unsubscribe()
-      this.clickMe()
+      this.addQuote()
       setTimeout (() => {
           if (!this.stopped) this.startParsing()
       }, 3000);
@@ -53,19 +49,12 @@ export class HelloComponent implements OnInit, OnDestroy {
   }
 
   // fetch data
-  clickMe(): void {
-      if (!this.stopped) {
-          let sobject = this.anisvc.getQuote; // new observable
-          this.subscription = sobject.subscribe(
-              (data: AnimeObject) => {
-                  this.aniquote = {
-                      anime: data.anime,
-                      character:  data.character,
-                      quote: data.quote
-                  }
-                  this.pushQuotesIntoArray(this.aniquote)
-              }
-          );
-      }
+  addQuote(): void {
+      let sobject = this.anisvc.getQuote;
+      this.subscription = sobject.subscribe(
+          (data: AnimeObject) => {
+              this.pushQuotesIntoArray(this.aniquote = data)
+          }
+      );
   }
 }
