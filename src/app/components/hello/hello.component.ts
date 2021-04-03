@@ -18,14 +18,14 @@ export class HelloComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.subscription.unsubscribe()
+      this.subscription?.unsubscribe()
       console.log("after leaving the app, we cleanup")
   }
 
   // keep em quotes for listing
   pushQuotesIntoArray(quote: AnimeObject): void {
-      this.anisvc.animeDataArray.indexOf(quote) === -1 ?
-        this.anisvc.animeDataArray.push(quote) :
+      this.anisvc.animeDataArray?.indexOf(quote) === -1 ?
+        this.anisvc.animeDataArray?.push(quote) :
         console.log("quote is already in array")
 
       console.log("quote inserted into array");
@@ -33,8 +33,7 @@ export class HelloComponent implements OnDestroy {
 
   // start button
   startParsing(): void {
-      if (this.subscription)
-        this.subscription.unsubscribe()
+      this.subscription?.unsubscribe()
       this.addQuote()
       setTimeout (() => {
           if (!this.stopped) this.startParsing()
@@ -44,13 +43,13 @@ export class HelloComponent implements OnDestroy {
   // stop button
   stopParsing(): void {
       this.stopped = !!this.subscription
-      this.subscription.unsubscribe()
+      this.subscription?.unsubscribe()
   }
 
   // fetch data
   addQuote(): void {
       let sobject = this.anisvc.getQuote;
-      this.subscription = sobject.subscribe(
+      this.subscription = sobject?.subscribe(
           (data: AnimeObject) => {
               this.pushQuotesIntoArray(this.aniquote = data)
           }
