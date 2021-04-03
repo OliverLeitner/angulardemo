@@ -15,6 +15,6 @@ export class AniquotesService {
     constructor(private http: HttpClient) {}
 
     get getQuote(): Observable<Object> {
-        return this.http.get<AnimeObject>('https://animechan.vercel.app/api/random')
+        return this.http.get<AnimeObject>('http://angular.localnet:3010/random')
     }
 }

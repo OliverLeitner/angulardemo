@@ -37,7 +37,7 @@ export class HelloComponent implements OnDestroy {
       this.addQuote()
       setTimeout (() => {
           if (!this.stopped) this.startParsing()
-      }, 3000);
+      }, 36000); // max 100 requests per hour
   }
 
   // stop button
