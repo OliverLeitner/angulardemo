@@ -43,9 +43,8 @@ export class HelloComponent implements OnDestroy {
 
   // stop button
   stopParsing(): void {
-      if (this.subscription)
-        this.subscription.unsubscribe()
-      this.stopped = true
+      this.stopped = !!this.subscription
+      this.subscription.unsubscribe()
   }
 
   // fetch data
