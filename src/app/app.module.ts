@@ -29,7 +29,6 @@ import {AniquotesService} from './services/aniquotes.service';
     HttpClientModule,
     ButtonModule,
     TableModule,
-    //PaginatorModule,
     AppRoutingModule
   ],
   providers: [

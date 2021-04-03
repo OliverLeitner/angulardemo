@@ -10,13 +10,13 @@ import { AnimeObject } from '../shared/AnimeObject'
     providedIn: 'root'
 }*/)
 export class AniquotesService {
-  protected animeData: AnimeObject = new AnimeObject()
-  public animeDataArray: AnimeObject[] = []
+    protected animeData: AnimeObject = new AnimeObject()
+    public animeDataArray: AnimeObject[] = []
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {}
 
-  get getQuote(): Observable<Object> {
-      let observableObject = this.http.get<AnimeObject>('https://animechan.vercel.app/api/random')
-      return observableObject
-  }
+    get getQuote(): Observable<Object> {
+        let observableObject = this.http.get<AnimeObject>('https://animechan.vercel.app/api/random')
+        return observableObject
+    }
 }

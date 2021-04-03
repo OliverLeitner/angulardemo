@@ -4,8 +4,6 @@ import { Observable, Subscription } from 'rxjs';
 import {AniquotesService} from '../../services/aniquotes.service';
 import {AnimeObject} from '../../shared/AnimeObject';
 
-import {HelloTableComponent} from '../hello-table/hello-table.component';
-
 @Component({
   selector: 'app-hello',
   templateUrl: './hello.component.html',
@@ -14,7 +12,7 @@ import {HelloTableComponent} from '../hello-table/hello-table.component';
 export class HelloComponent implements OnInit, OnDestroy {
   aniquote: AnimeObject = new AnimeObject()
   subscription: Subscription = new Subscription()
-  stopped: boolean = false
+  stopped: boolean = true
 
   constructor(public anisvc: AniquotesService) {
   }
@@ -30,22 +28,27 @@ export class HelloComponent implements OnInit, OnDestroy {
 
   // keep em quotes for listing
   pushQuotesIntoArray(quote: AnimeObject): void {
-      this.anisvc.animeDataArray.indexOf(quote) === -1 ? this.anisvc.animeDataArray.push(quote) : console.log("quote is already in array")
+      this.anisvc.animeDataArray.indexOf(quote) === -1 ?
+        this.anisvc.animeDataArray.push(quote) :
+        console.log("quote is already in array")
+
       console.log("quote inserted into array");
   }
 
   // start button
   startParsing(): void {
-      if (this.subscription) this.subscription.unsubscribe()
+      if (this.subscription)
+        this.subscription.unsubscribe()
       this.clickMe()
       setTimeout (() => {
-         this.startParsing()
+          if (!this.stopped) this.startParsing()
       }, 3000);
   }
 
   // stop button
   stopParsing(): void {
-      if (this.subscription) this.subscription.unsubscribe()
+      if (this.subscription)
+        this.subscription.unsubscribe()
       this.stopped = true
   }
 
